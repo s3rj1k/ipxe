@@ -137,6 +137,11 @@ extern struct list_head ipv4_miniroutes;
 
 extern struct net_protocol ipv4_protocol __net_protocol;
 
+extern int ipv4_add_miniroute ( struct net_device *netdev,
+				struct in_addr address,
+				struct in_addr network,
+				struct in_addr netmask,
+				struct in_addr gateway );
 extern struct ipv4_miniroute * ipv4_route ( unsigned int scope_id,
 					    struct in_addr *dest );
 extern int ipv4_has_any_addr ( struct net_device *netdev );

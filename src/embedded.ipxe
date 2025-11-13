@@ -1,0 +1,3 @@
+#!ipxe
+apipa --gateway 169.254.1.42 net0 6:ipv4 1.1.1.1 42:string pool.ntp.org
+shell

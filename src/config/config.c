@@ -224,6 +224,9 @@ REQUIRE_OBJECT ( image_trust_cmd );
 #ifdef DHCP_CMD
 REQUIRE_OBJECT ( dhcp_cmd );
 #endif
+#ifdef APIPA_CMD
+REQUIRE_OBJECT ( apipa_cmd );
+#endif
 #ifdef SANBOOT_CMD
 REQUIRE_OBJECT ( sanboot_cmd );
 #endif

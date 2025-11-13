@@ -82,11 +82,11 @@ static struct profiler ipv4_rx_profiler __profiler = { .name = "ipv4.rx" };
  * @v gateway		Gateway address (if any)
  * @ret rc		Return status code
  */
-static int ipv4_add_miniroute ( struct net_device *netdev,
-				struct in_addr address,
-				struct in_addr network,
-				struct in_addr netmask,
-				struct in_addr gateway ) {
+int ipv4_add_miniroute ( struct net_device *netdev,
+			 struct in_addr address,
+			 struct in_addr network,
+			 struct in_addr netmask,
+			 struct in_addr gateway ) {
 	struct ipv4_miniroute *miniroute;
 	struct ipv4_miniroute *before;
 	struct in_addr hostmask;

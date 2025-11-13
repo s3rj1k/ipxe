@@ -1,0 +1,74 @@
+BasedOnStyle: LLVM
+
+# Indentation
+IndentWidth: 8
+TabWidth: 8
+UseTab: Always
+ContinuationIndentWidth: 8
+
+# Braces
+BreakBeforeBraces: Linux
+BraceWrapping:
+  AfterFunction: true
+  AfterControlStatement: false
+  AfterStruct: false
+  AfterEnum: false
+
+# Line length
+ColumnLimit: 80
+
+# Spacing
+SpaceAfterCStyleCast: true
+SpaceBeforeParens: Always
+SpaceBeforeAssignmentOperators: true
+SpacesInParentheses: true
+SpacesInSquareBrackets: false
+SpacesInCStyleCastParentheses: true
+SpaceInEmptyParentheses: false
+
+# Alignment
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignEscapedNewlines: Left
+AlignOperands: true
+AlignTrailingComments: true
+
+# Pointers and references
+PointerAlignment: Right
+DerivePointerAlignment: false
+
+# Function formatting
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+BinPackArguments: true
+BinPackParameters: true
+
+# Include sorting
+SortIncludes: false
+IncludeBlocks: Preserve
+
+# Breaking
+AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: false
+BreakBeforeBinaryOperators: None
+BreakBeforeTernaryOperators: true
+BreakStringLiterals: true
+
+# Penalties (prefer certain line breaks)
+PenaltyBreakBeforeFirstCallParameter: 19
+PenaltyBreakComment: 300
+PenaltyBreakFirstLessLess: 120
+PenaltyBreakString: 1000
+PenaltyExcessCharacter: 1000000
+PenaltyReturnTypeOnItsOwnLine: 60
+
+# Comments
+ReflowComments: true
+SpacesBeforeTrailingComments: 1
+
+# Other
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
+IndentCaseLabels: false
