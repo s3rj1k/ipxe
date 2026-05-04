@@ -89,6 +89,7 @@ REQUIRE_OBJECT ( sbi_console );
  */
 #ifdef NET_PROTO_IPV4
 REQUIRE_OBJECT ( ipv4 );
+REQUIRE_OBJECT ( apipa );
 #endif
 #ifdef NET_PROTO_IPV6
 REQUIRE_OBJECT ( ipv6 );
