@@ -107,13 +107,13 @@ FILE_SECBOOT ( PERMITTED );
 #define LOGIN_CMD		/* Login command */
 //#define LOTEST_CMD		/* Loopback testing commands */
 #define MENU_CMD		/* Menu commands */
-//#define NEIGHBOUR_CMD		/* Neighbour management commands */
-//#define NSLOOKUP_CMD		/* DNS resolving command */
+#define NEIGHBOUR_CMD		/* Neighbour management commands */
+#define NSLOOKUP_CMD		/* DNS resolving command */
 #define NTP_CMD			/* NTP commands */
 #define NVO_CMD			/* Non-volatile option storage commands */
 #define PARAM_CMD		/* Request parameter commands */
 #define PCI_CMD			/* PCI commands */
-//#define PING_CMD		/* Ping command */
+#define PING_CMD		/* Ping command */
 //#define PROFSTAT_CMD		/* Profiling commands */
 //#define PXE_CMD		/* PXE commands */
 #define ROUTE_CMD		/* Routing table management commands */

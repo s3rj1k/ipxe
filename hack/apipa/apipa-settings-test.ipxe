@@ -1,0 +1,65 @@
+#!ipxe
+
+echo
+echo ====================================
+echo  iPXE APIPA Settings Test
+echo ====================================
+echo
+
+ifconf -c apipa net0 || goto fail_apipa
+
+echo
+echo Setting gateway, dns, ntp, user-class...
+
+set net0/gateway:ipv4 169.254.1.42    || goto fail_settings
+set net0/dns:ipv4 1.1.1.1             || goto fail_settings
+set net0/ntp:ipv4 2.2.2.2             || goto fail_settings
+set net0/user-class:string test-apipa  || goto fail_settings
+
+echo
+echo Verifying settings...
+
+show net0/ip         || goto fail_settings
+show net0/netmask    || goto fail_settings
+show net0/gateway    || goto fail_settings
+show net0/dns        || goto fail_settings
+show net0/ntp        || goto fail_settings
+show net0/user-class || goto fail_settings
+
+echo
+echo Pinging gateway 169.254.1.42...
+echo
+
+ping --count 3 169.254.1.42 && goto pass || goto fail_ping
+
+:pass
+echo
+echo =====================================
+echo  APIPA settings test PASSED
+echo =====================================
+echo
+poweroff
+
+:fail_apipa
+echo
+echo =====================================
+echo  APIPA settings test FAILED (apipa)
+echo =====================================
+echo
+poweroff
+
+:fail_settings
+echo
+echo ========================================
+echo  APIPA settings test FAILED (settings)
+echo ========================================
+echo
+poweroff
+
+:fail_ping
+echo
+echo =====================================
+echo  APIPA settings test FAILED (ping)
+echo =====================================
+echo
+poweroff

@@ -1,0 +1,21 @@
+---
+Checks: >
+  clang-analyzer-*,
+  bugprone-*,
+  cert-*,
+  misc-*,
+  performance-*,
+  readability-*,
+  -bugprone-easily-swappable-parameters,
+  -bugprone-reserved-identifier,
+  -misc-unused-parameters,
+  -readability-identifier-length,
+  -readability-magic-numbers,
+  -readability-redundant-declaration,
+  -readability-function-cognitive-complexity,
+  -cert-dcl37-c,
+  -cert-dcl51-c,
+  -cert-dcl51-cpp,
+  -clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling
+WarningsAsErrors: '*'
+HeaderFilterRegex: 'ipxe/apipa\.h'
