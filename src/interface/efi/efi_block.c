@@ -887,13 +887,17 @@ static int efi_block_exec ( unsigned int drive,
  * Check that EFI block device is eligible for a local virtual drive number
  *
  * @v handle		Block device handle
+ * @v exclude_self	Exclude the block device that we were loaded from
  * @ret rc		Return status code
  *
  * We assign virtual drive numbers for local (non-SAN) EFI block
  * devices that represent complete disks, to provide roughly
  * equivalent functionality to BIOS drive numbers.
  */
-static int efi_block_local ( EFI_HANDLE handle ) {
+static int efi_block_local ( EFI_HANDLE handle, int exclude_self ) {
+	EFI_BOOT_SERVICES *bs = efi_systab->BootServices;
+	EFI_DEVICE_PATH_PROTOCOL *path;
+	EFI_HANDLE self;
 	struct san_device *sandev;
 	struct efi_block_data *block;
 	EFI_BLOCK_IO_PROTOCOL *blockio;
@@ -904,6 +908,23 @@ static int efi_block_local ( EFI_HANDLE handle ) {
 		block = sandev->priv;
 		if ( handle == block->handle )
 			return -ENOTTY;
+	}
+
+	/* Skip the block device we were loaded from, to avoid
+	 * re-launching iPXE when booted from removable media (e.g.
+	 * an El Torito ISO) whose default boot file is iPXE itself.
+	 */
+	if ( exclude_self && efi_loaded_image_path ) {
+		path = efi_loaded_image_path;
+		if ( bs->LocateDevicePath ( &efi_block_io_protocol_guid,
+					    &path, &self ) == 0 ) {
+			if ( handle == self ) {
+				DBGC2 ( handle, "EFIBLK %s is loaded-image "
+					"device\n",
+					efi_handle_name ( handle ) );
+				return -ENOTTY;
+			}
+		}
 	}
 
 	/* Open block I/O protocol */
@@ -942,8 +963,15 @@ static int efi_block_boot ( unsigned int drive,
 	struct efi_block_data *block;
 	unsigned int vdrive;
 	unsigned int index;
+	int exclude_self;
 	EFI_STATUS efirc;
 	int rc;
+
+	/* Skip self only when no explicit target is given; an
+	 * explicit filename/label/uuid may legitimately match self.
+	 */
+	exclude_self = ! ( config->filename || config->extra ||
+			   config->label || config->uuid );
 
 	/* Ensure that any local drives are connected */
 	efi_driver_reconnect_all();
@@ -1005,7 +1033,7 @@ static int efi_block_boot ( unsigned int drive,
 			 * status, since it is not an interesting
 			 * error.
 			 */
-			if ( efi_block_local ( handle ) != 0 ) {
+			if ( efi_block_local ( handle, exclude_self ) != 0 ) {
 				/* Do not consume virtual drive number */
 				vdrive--;
 				continue;
